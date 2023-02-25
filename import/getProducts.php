@@ -1,0 +1,23 @@
+<?php
+
+require_once '../wp-config.php';
+
+$curl = curl_init();
+curl_setopt_array($curl, [
+    CURLOPT_URL => 'https://api.sbis.ru/retail/nomenclature/list?pointId=139&priceListId=19&pageSize=99999&withBalance=true',
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => '',
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => 'GET',
+    CURLOPT_HTTPHEADER => [
+        'X-SBISAccessToken: ' . SBIS_TOKEN
+    ],
+]);
+
+$response = curl_exec($curl);
+curl_close($curl);
+
+file_put_contents('response.json', $response);
